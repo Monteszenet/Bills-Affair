@@ -1,0 +1,67 @@
+MSZNT:
+		The main focus of the MSZNT Engine ('MSZNT') is customisation and ease of use. 
+	A MSZNT Program is divided into a few general concepts: the Application, 
+	Execution Contexts, and the Lua Script Runtime. The Application can be considered,
+	essentially, a 'black-box' of magic doo-hickery with some exposed API functions for
+	low-level items. It initiates Lua, the window, the low-renderer, etc.--any
+	functionality dealing with SDL. The Application can be considered almost a 'kernel' of sorts,
+	hosting every sub-aspect and controlling everything. It's most important part, though, 
+	is, of course, the runtime loop and its loading of contexts.
+		That which truly makes a MSZNT Program a real 'program' is its Execution Contexts.
+	At init-time, the Application will load all the Contexts its able to find, mainly through
+	their DLLs, though the Application does hold a 'None' Context which is natively used
+	as the first context loaded and executed under any secondary ones. An Execution Context
+	is defined as a DLL and uses functions exposed by the MSZNT API to interface with the
+	Application. An Execution Context must have an Init, Execute, and Finalise function, and all
+	must be registered with the Application. At runtime, the Application will call each Context's
+	Init and Finalise functions at init-time and while exiting, respectively. Each Context's
+	Execute function will be called if the respective Context has been invoked and is, therefore,
+	active. The customisable nature of a MSZNT Program comes from the ability for Contexts
+	to be overlaid upon each other. Take the example of a completely basic MSZNT Program, right
+	out of the box. It holds no custom Contexts, no Lua scripts. The Application will then simply
+	run the 'None' Context by itself and provide the user a simple console. Now, we can add, for
+	example, a 'Slideshow' Context. This Context provides the ability for the user to load,
+	through LUA, certain iamges, and then to show these images linearly. The user will write
+	a Lua script for this, and then, in the 'None' Context's Lua space, write that this 
+	Context shall be invoked immediately upon entrance to the Application. But perhaps the
+	'Slideshow' Context was faultily made, or maybe the user wrote a malformed Lua script.
+	In this case, the Application will catch any error that rises and immediately exit every
+	Context that is not the 'None' Context, from which it will use that console to output what
+	went wrong. Now, we don't need to have just one custom Context--we can overlay them. We can,
+	for example, load in a new 'Audio' Context alongisde our Slideshow Context. Now, in Lua,
+	we can, alongside our image commands, have audio commands. A good example of a similar type
+	of functionality outside of MSZNT would be libraries in C++. We have libraries like OpenGL,
+	which handle 3D rendering, and we can use those in tandem with libraries like OpenAL for audio,
+	stb_image for loading images, assorted math libraries, etc., etc. 
+		Contexts can either by Dynamic or Static. A Dynamic Context has its Execute function
+	directly called by the Application's runtime loop--every frame. A Static Context, however,
+	does not have an Execute function, and instead is simply initialised and finalised. For example,
+	a simple 'Math' library which helps with adding things like vectors and tables. This library
+	doesn't need to be called every frame, as its just used statically by other Contexts and Lua
+	scripts. Per the use of multiple contexts, this sort of functionality can be defined using the
+	Application's Lua API and functions, wherein, for example, one could set that a certain Context's
+	rendering be done a Render-Layer above above another (the Application will load all Contexts 
+	before any Lua Script is called), so that any rendering done by this context is done first and 
+	seen above the second.
+		In truth, technically, one could simply use a singular custom Context instead of many smaller
+	ones. I.e. instead of having GLFW, OpenGL, stb_image, OpenAL, etc., one could simply use the SDL2
+	library and have a complete 2D rendering and application library through one API. The difference,
+	here though, is in the application those libraries are used in. Having one large library works fine
+	if that's exactly what is needed--a game engine need not use 10 different small APIs when one 
+	perfectly suitable large API can be used. But if one simply desires to create a 2D renderer with
+	no input-output, audio, or other similar things, then a simple 2D rendering library, i.e. OpenGL,
+	is needed. In creating the MSZNT Game Engine, though, I have elected to multiple Contexts, as I
+	am valuing pure customisation and many different possibilities in creating a game. 
+		The MSZNT Game Engine is made up of a few different Contexts, all centred around the goal of
+	creating any type of game, ranging from a Bill Clinton Visual Novel to an I.R.S. FNAF Rip-off to a
+	3D Horror Game set on Little St. James. And it is possible to use each game-type at once. One could
+	have a visual novel which turns into a 2D platformer which turns into a 3D first-person shooter.
+	One way to think about this is through the example of a C++ program. A C++ program is made up of
+	header files and source files. A Context is simply just another source file, perhaps a class. This
+	is accessed through the header files, and two source files can then use each other's functionality.
+	We could have a source file describing the audio functionality of the program, and then we simply
+	access that by functions like 'PlayAudio()', which are exposed by the header. 
+
+The MSZNT Game Engine:
+	The Contexts used in the MSZNT Game Engine are as follows:
+		
