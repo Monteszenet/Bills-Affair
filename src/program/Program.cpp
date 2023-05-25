@@ -6,10 +6,13 @@
 #include "src/core/Input.h"
 #include "src/core/Window.h"
 #include "src/core/Logging.h"
+#include "src/core/Scripts.h"
 
 void Program::Init()
 {
+	Lua_RegisterFunction("main", Program::L_main);
 
+	Lua_RunScriptFile("game/scripts/main.lua");
 }
 
 void Program::OnUpdate()
@@ -32,4 +35,25 @@ void Program::input()
 	{
 		App_Quit();
 	}
+}
+
+int Program::L_main(lua_State* L)
+{
+	LOG_INFO("hiiiiiiiiiiiiiiiiiiiiiiiii");
+
+	return 0;
+}
+
+int Program::L_image(lua_State* L)
+{
+
+
+	return 0;
+}
+
+int Program::L_audio(lua_State* L)
+{
+
+
+	return 0;
 }

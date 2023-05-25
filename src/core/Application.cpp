@@ -27,7 +27,7 @@ void Application::Run()
 
 		InitLuaEnvironment();
 
-		RunScript(GetScript("game/scripts/config.lua"));
+		Lua_RunScriptFile("game/scripts/config.lua");
 
 		CreateWindow(m_name, m_window_x, m_window_y);
 

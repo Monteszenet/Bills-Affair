@@ -5,7 +5,7 @@ m_AppConfig = {
 	WindowHeight = 720,
 }
 
-AppConfig(
+APP_CONFIG(
 	m_AppConfig.Title, 
 	m_AppConfig.Version, 
 	m_AppConfig.WindowWidth,

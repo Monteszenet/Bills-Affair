@@ -39,7 +39,7 @@ bool CheckLua(int r)
 	if (r != LUA_OK)
 	{
 		std::string lua_error = lua_tostring(L, -1);
-		LOG_ERROR("[LUA ERROR]: " + lua_error);
+		LOG_ERROR("[LUA ERROR] " + lua_error);
 		return false;
 	}
 	return true;
@@ -62,9 +62,16 @@ void InitLuaEnvironment()
 		lua_setglobal(L, "LOG_FATAL");
 	}
 
-	lua_register(L, "AppConfig", L_AppConfig);
-	lua_register(L, "Log", L_Log);
+	lua_register(L, "APP_CONFIG", L_AppConfig);
+	lua_register(L, "LOG", L_Log);
 }
+
+void Lua_RegisterFunction(std::string name, LuaCFunction function)
+{
+	lua_register(L, name.c_str(), function);
+}
+
+
 
 void CompileLuaToMSZNT(std::string path)
 {
@@ -72,7 +79,7 @@ void CompileLuaToMSZNT(std::string path)
 	scripts.scripts[(M_SCRIPT)scripts.scripts.size()] = "game/scripts/config.lua";
 }
 
-M_SCRIPT GetScript(std::string script)
+M_SCRIPT Lua_GetScript(std::string script)
 {
 	for (auto& s : scripts.scripts)
 	{
@@ -83,12 +90,12 @@ M_SCRIPT GetScript(std::string script)
 	return NULL_SCRIPT;
 }
 
-void RunScript(M_SCRIPT script)
+void Lua_RunScript(M_SCRIPT script)
 {
 	if (scripts.scripts.find(script) != scripts.scripts.end())
 	{
 		if (CheckLua(luaL_dofile(L, scripts.scripts[script].c_str())) == false)
-			LOG_FATAL("Failed to run script.");
+			LOG_ERROR("Failed to run script.");
 #ifdef M_DEBUG
 		LOG_INFO("Ran script: " + scripts.scripts[script]);
 #endif
@@ -96,9 +103,27 @@ void RunScript(M_SCRIPT script)
 	}
 	else
 	{
-		LOG_FATAL("Attempted to run invalid/unknown script.");
+		LOG_ERROR("Attempted to run invalid/unknown script.");
 		return;
 	}
+}
+
+void Lua_RunScriptFile(std::string path)
+{
+	if (CheckLua(luaL_dofile(L, path.c_str())) == false)
+		LOG_ERROR("Failed to run script from path: " + path);
+#ifdef M_DEBUG
+	LOG_INFO("Ran script: " + path);
+#endif
+}
+
+void Lua_RunScript(std::string script)
+{
+	if (CheckLua(luaL_dostring(L, script.c_str())) == false)
+		LOG_ERROR("Failed to run script:\n" + script);
+#ifdef M_DEBUG
+	LOG_INFO("Ran script:\n" + script);
+#endif
 }
 
 
