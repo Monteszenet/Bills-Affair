@@ -1,7 +1,7 @@
 m_AppConfig = {
-	Title = "Bill's Affair", 
-	Version = "1.997", 
-	WindowWidth = 1280, 
+	Title = "Internal Revenue Service", 
+	Version = "2.001", 
+	WindowWidth = 960, 
 	WindowHeight = 720,
 }
 
