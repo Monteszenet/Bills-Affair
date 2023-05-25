@@ -2,7 +2,7 @@
 
 #include "Logging.h"
 
-Uint8 PastKeyboardMap[256] = { 0 };
+Uint8 PastKeyboardMap[SDL_NUM_SCANCODES] = { 0 };
 
 const Uint8* CurrentKeyboardMap;
 

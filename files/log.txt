@@ -5,7 +5,6 @@ MSZNT LOG FILE.
 [INFO] Initialised logging.
 [INFO] Initialised SDL.
 [INFO] Ran script: game/scripts/config.lua
-[INFO] Initialised OpenGL.
 [INFO] Initialised renderer.
 [INFO] Initialised program.
 [INFO] Showed window.

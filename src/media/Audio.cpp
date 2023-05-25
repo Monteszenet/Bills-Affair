@@ -37,7 +37,10 @@ MMusic* Mixer_CreateMusic(std::string path)
 	new_music->handle = Mix_LoadMUS(path.c_str());
 
 	if (new_music->handle == NULL)
-		LOG_ERROR("Unable to load audio. Path given: '" + path + "'");
+	{
+		std::string sdl_error = SDL_GetError();;
+		LOG_ERROR("Unable to load audio. Path given: '" + path + "'; SDL Error: " + sdl_error);
+	}
 
 	return new_music;
 }
@@ -49,7 +52,12 @@ void Mixer_FreeMusic(MMusic* music)
 
 void Mixer_PlayMusic(MMusic* music, int loops)
 {
-	Mix_PlayMusic(music->handle, loops);
+	int i = Mix_PlayMusic(music->handle, loops);
+	if (i == -1)
+	{
+		std::string sdl_error = SDL_GetError();;
+		LOG_ERROR("Unable to play audio; SDL Error: " + sdl_error);
+	}
 }
 void Mixer_StopMusic()
 {

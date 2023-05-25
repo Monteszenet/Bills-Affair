@@ -22,7 +22,7 @@ private:
 	std::unordered_map<std::string, MTexture*> texts;
 	std::unordered_map<std::string, MMusic*> audios;
 
-	FontID BodoniModa = -1;
+	FONT_ID BodoniModa = -1;
 
 	int state = -1;
 	bool state_event = false;
