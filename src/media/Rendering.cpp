@@ -5,6 +5,8 @@
 #include "libs/sdl/include/SDL_image.h"
 #include "libs/sdl/include/SDL_ttf.h"
 
+//#include "libs/glew/GL/glew.h"
+
 #include "src/core/Window.h"
 #include "src/core/Logging.h"
 
@@ -17,6 +19,7 @@ struct MFont
 
 struct Renderer
 {
+	//SDL_GLContext gl_context = NULL;
 	SDL_Renderer* handle = NULL;
 	SDL_Texture* target = NULL;
 
@@ -28,6 +31,15 @@ struct Renderer
 void InitRendering()
 {
 	renderer = new Renderer;
+
+	// renderer->gl_context = SDL_GL_CreateContext(Window_GetHandle());
+	// 
+	// GLenum err = glewInit()
+;	// if (err != GLEW_OK)
+	// 	LOG_FATAL("Could not initialise GLEW, GLEW Error: " /*+ glewGetErrorString(err)*/);
+	// 
+	// LOG_INFO("Initialised OpenGL.");
+
 
 	renderer->handle = SDL_CreateRenderer(Window_GetHandle(), -1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
@@ -145,7 +157,7 @@ MTexture* Render_CreateTexture(std::string path)
 	return new_texture;
 }
 
-MTexture* Render_CreateTexture_Text(std::string text, FontID font_id, MFontParameters params)
+MTexture* Render_CreateTexture_Text(std::string text, FONT_ID font_id, MFontParameters params)
 {
 	MTexture* new_texture = new MTexture;
 
@@ -216,7 +228,7 @@ MTexture* Render_CreateTexture_Text(std::string text, FontID font_id, MFontParam
 	}
 
 	if (new_texture->surface == NULL)
-		LOG_ERROR("Failed to create texture from text. Text given: '" + text + "', Font given: '" + font->name + "'");
+		LOG_FATAL("Failed to create font-texture from text. Text given: '" + text + "', Font given: '" + font->name + "'");
 
 	new_texture->width = new_texture->surface->w;
 	new_texture->height = new_texture->surface->h;

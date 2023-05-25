@@ -384,3 +384,30 @@ void Program::input()
 	//	App_Quit();
 	//}
 }
+
+//void Program::Init()
+//{
+//
+//}
+//
+//void Program::OnUpdate()
+//{
+//	input();
+//}
+//
+//void Program::Finalise()
+//{
+//
+//}
+//
+//void Program::input()
+//{
+//	if (GetKeyDown(SDL_SCANCODE_ESCAPE) == true)
+//	{
+//		App_Quit();
+//	}
+//	if (GetMouseButtonPressed(Mouse_LeftButton))
+//	{
+//		App_Quit();
+//	}
+//}

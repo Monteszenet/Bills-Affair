@@ -1,16 +1,22 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "libs/lua/include/lua.hpp"
+
+#include "Utility.h"
+
+struct ApplicationParameters
+{
+	std::string base_dir;
+	CommandLineArgs command_line_args;
+};
 
 class Application
 {	
 public:
 	void Run();
-
-public:
-	void SetBaseDirectory(std::string base_dir);
 
 private:
 	const std::string auto_m_name = "MSZNT";
@@ -27,16 +33,19 @@ private:
 	bool m_running = false;
 	int m_window_x = auto_m_window_x;
 	int m_window_y = auto_m_window_y;
+	CommandLineArgs m_command_line_args;
 
 private:
 	void handle_input();
 
 	friend void App_Config(std::string title, std::string version, int w, int h);
 	friend void App_Quit();
+	friend Application* CreateApplication(ApplicationParameters params);
+	friend void DeleteApplication();
 };
 
 void App_Config(std::string title, std::string version, int w, int h);
 void App_Quit();
 
-Application* CreateApplication(std::string base_directory);
+Application* CreateApplication(ApplicationParameters params);
 void DeleteApplication();

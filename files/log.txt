@@ -4,11 +4,13 @@ MSZNT LOG FILE.
 [INFO] Entering program init-time.
 [INFO] Initialised logging.
 [INFO] Initialised SDL.
+[INFO] Ran script: game/scripts/config.lua
+[INFO] Initialised OpenGL.
 [INFO] Initialised renderer.
 [INFO] Initialised program.
 [INFO] Showed window.
 [INFO] [-------------------]
-[INFO] Entering program runtime.
+[INFO] Entered program runtime.
 [INFO] [-------------------]
-[INFO] Exiting program runtime.
+[INFO] Exited program runtime.
 [INFO] Log flushed to file: 'files\log.txt'

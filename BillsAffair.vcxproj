@@ -133,7 +133,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib; SDL2main.lib; SDL2_image.lib; SDL2_mixer.lib; Shell32.lib; lua54.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib; SDL2main.lib; SDL2_image.lib; SDL2_mixer.lib; Shell32.lib; lua54.lib; glew32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -141,13 +141,14 @@
     <ClCompile Include="libs\glm\detail\glm.cpp" />
     <ClCompile Include="src\core\Logging.cpp" />
     <ClCompile Include="src\core\LuaGlue.cpp" />
+    <ClCompile Include="src\core\Memory.cpp" />
     <ClCompile Include="src\core\Scripts.cpp" />
+    <ClCompile Include="src\core\Utility.cpp" />
     <ClCompile Include="src\media\Audio.cpp" />
     <ClCompile Include="src\media\Fonts.cpp" />
     <ClCompile Include="src\media\Media.cpp" />
     <ClCompile Include="src\media\Rendering.cpp" />
     <ClCompile Include="src\core\Input.cpp" />
-    <ClCompile Include="src\core\FileSystem.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\core\Window.cpp" />
@@ -441,6 +442,8 @@
     <ClInclude Include="libs\glm\vec3.hpp" />
     <ClInclude Include="libs\glm\vec4.hpp" />
     <ClInclude Include="libs\glm\vector_relational.hpp" />
+    <ClInclude Include="src\core\Memory.h" />
+    <ClInclude Include="src\core\Utility.h" />
     <ClInclude Include="src\program\Program.h" />
     <ClInclude Include="src\core\Logging.h" />
     <ClInclude Include="libs\sdl\include\SDL_ttf.h" />
@@ -458,7 +461,6 @@
     <ClInclude Include="libs\sdl\include\SDL_image.h" />
     <ClInclude Include="libs\sdl\include\SDL_mixer.h" />
     <ClInclude Include="src\core\Input.h" />
-    <ClInclude Include="src\core\FileSystem.h" />
     <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="libs\sdl\include\begin_code.h" />
     <ClInclude Include="libs\sdl\include\close_code.h" />

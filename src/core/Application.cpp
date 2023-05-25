@@ -14,18 +14,20 @@ Application* app;
 
 void Application::Run()
 {
-	// Base application configuration and init.
-
 	try {
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);		LOG_INFO("Initialised SDL.");
+		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		//SDL_GL_SetSwapInterval(1);
 
 		EnterScriptingContext();
 
 		CompileLuaToMSZNT("game\\scripts");
 
-		InitLuaFunctions();
+		InitLuaEnvironment();
 
-		RunScript(0);
+		RunScript(GetScript("game/scripts/config.lua"));
 
 		CreateWindow(m_name, m_window_x, m_window_y);
 
@@ -40,22 +42,16 @@ void Application::Run()
 
 		m_running = true;
 
-		LOG_INFO(LOG_DEMARCATION);	 LOG_INFO("Entering program runtime.");
+		LOG_INFO(LOG_DEMARCATION);	 LOG_INFO("Entered program runtime.");
 
 		while (m_running == true)
 		{
-			
-
 			handle_input();
 
 			program.OnUpdate();
-
-			//OnUpdateContexts();
-
-			//OnUpdateMedia();
 		}
 
-		LOG_INFO(LOG_DEMARCATION); LOG_INFO("Exiting program runtime.");
+		LOG_INFO(LOG_DEMARCATION); LOG_INFO("Exited program runtime.");
 
 		program.Finalise();
 
@@ -69,15 +65,9 @@ void Application::Run()
 	catch (MLog error)
 	{
 		LOG_INFO(LOG_DEMARCATION); LOG_INFO("Quitting program due to fatal error.");
-		return;
 	};
 
 	return;
-}
-
-void Application::SetBaseDirectory(std::string base_dir)
-{
-	m_base_directory = base_dir;
 }
 
 void Application::handle_input()
@@ -120,10 +110,11 @@ void App_Quit()
 	app->m_running = false;
 }
 
-Application* CreateApplication(std::string base_directory)
+Application* CreateApplication(ApplicationParameters params)
 {
 	app = new Application;
-	app->SetBaseDirectory(base_directory);
+	app->m_base_directory = params.base_dir;
+	app->m_command_line_args = params.command_line_args;
 	return app;
 }
 

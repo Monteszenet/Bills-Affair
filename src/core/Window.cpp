@@ -1,6 +1,6 @@
 #include "Window.h"
 
-#include "Memory.h"
+#include "Logging.h"
 
 struct Window
 {
@@ -26,7 +26,9 @@ void CreateWindow(std::string name, int width, int height)
 	window->m_maximised = false;
 
 	window->m_window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE);
+		SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE /* | SDL_WINDOW_OPENGL */);
+	if (window->m_window == NULL)
+		LOG_FATAL("Failed to create application window. SDL Error: " /* + SDL_GetError()*/);
 }
 
 void DestroyWindow()

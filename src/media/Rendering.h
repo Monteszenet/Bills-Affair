@@ -7,7 +7,8 @@
 
 #define uint8_t unsigned char
 
-#define FontID uint8_t
+#define FONT_ID uint8_t
+#define FONT_NULL -1
 
 class MTexture
 {
@@ -94,7 +95,7 @@ void Render_DrawQuad_Texture(QuadPoint<int> center, QuadPoint<unsigned int> size
 void Render_DrawQuad_Texture_Rotated(QuadPoint<int> center, QuadPoint<unsigned int> size, double angle, MTexture* texture);
 
 MTexture* Render_CreateTexture(std::string path);
-MTexture* Render_CreateTexture_Text(std::string text, FontID font_id, MFontParameters params);
+MTexture* Render_CreateTexture_Text(std::string text, FONT_ID font_id, MFontParameters params);
 void Render_DeleteTexture(MTexture* texture);
 void Render_LoadTexture(MTexture* texture);
 void Render_UnloadTexture(MTexture* texture);

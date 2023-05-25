@@ -44,8 +44,8 @@ void FlushLog()
 		std::string log_type;
 		switch (log.log_type)
 		{
-		case MLog::LUA:
-			log_type = "[LUA] ";
+		case MLog::DEBUG:
+			log_type = "[DEBUG] ";
 			break;
 		case MLog::INFO:
 			log_type = "[INFO] ";
@@ -57,7 +57,7 @@ void FlushLog()
 			log_type = "[ERROR] ";
 			break;
 		case MLog::FATAL:
-			log_type = "[FATAL ERROR] ";
+			log_type = "[FATAL] ";
 			break;
 		}
 		
@@ -83,6 +83,12 @@ void Log_Lua(std::string msg)
 {
 	MLog lua = { MLog::LUA, msg };
 	mlog_data.log_history.push_back(lua);
+}
+
+void Log_Debug(std::string msg)
+{
+	MLog debug = { MLog::DEBUG, msg };
+	mlog_data.log_history.push_back(debug);
 }
 
 void Log_Info(std::string msg)
